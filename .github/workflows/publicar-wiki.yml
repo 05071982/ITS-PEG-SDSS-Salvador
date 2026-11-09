@@ -1,0 +1,42 @@
+name: Publicar wiki
+
+# Copia as páginas de docs/wiki/ para a wiki do repositório.
+# Roda a cada alteração em docs/wiki/ e também pode ser disparado manualmente
+# (aba Actions → Publicar wiki → Run workflow).
+on:
+  push:
+    branches: [main]
+    paths: ["docs/wiki/**"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publicar-wiki
+  cancel-in-progress: false
+
+jobs:
+  wiki:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixar repositório
+        uses: actions/checkout@v4
+
+      - name: Publicar docs/wiki na wiki
+        env:
+          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+        run: |
+          git clone "https://x-access-token:${TOKEN}@github.com/${REPO}.wiki.git" wiki
+          rsync -a --delete --exclude '.git' docs/wiki/ wiki/
+          cd wiki
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898283+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Wiki já está atualizada."
+          else
+            git commit -m "Atualiza wiki a partir de docs/wiki (${GITHUB_SHA::7})"
+            git push origin HEAD
+          fi
