@@ -1,0 +1,14 @@
+# Dados e saídas não são versionados (dados do SINAN / painéis internos)
+dados/*
+!dados/README.md
+saida_its/
+*.xlsx
+*.xls
+*.csv
+*.png
+*.docx
+*.pdf
+.Rhistory
+.RData
+.Rproj.user/
+~$*
