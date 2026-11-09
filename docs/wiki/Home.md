@@ -34,3 +34,6 @@ O estudo é conduzido pela **Sala de Situação em Saúde de Salvador (SDSS)**, 
             ▼
  Sensibilidade ao ponto de corte  +  diagnósticos dos resíduos
 ```
+
+---
+_Esta wiki é publicada automaticamente a partir da pasta [`docs/wiki/`](https://github.com/05071982/ITS-PEG-SDSS-Salvador/tree/main/docs/wiki) do repositório. Para alterá-la, edite os arquivos dessa pasta._
